@@ -12,11 +12,11 @@ import java.util.concurrent.CompletableFuture;
  * A Spring service for making HTTP requests asynchronously.
  */
 @Service
-public class HttpService {
+public class HttpRequestService {
     private final RestTemplate restTemplate;
 
     // Constructor injection for RestTemplate
-    public HttpService(RestTemplate restTemplate) {
+    public HttpRequestService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 

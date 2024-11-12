@@ -14,11 +14,11 @@ import java.util.concurrent.CompletableFuture;
 @Log4j2
 public class HttpRequestCoordinatorService {
 
-    private final HttpService httpService;
+    private final HttpRequestService httpRequestService;
 
     // Constructor injection for HttpService
-    public HttpRequestCoordinatorService(HttpService httpService) {
-        this.httpService = httpService;
+    public HttpRequestCoordinatorService(HttpRequestService httpRequestService) {
+        this.httpRequestService = httpRequestService;
     }
 
     /**
@@ -40,12 +40,12 @@ public class HttpRequestCoordinatorService {
                 // Wait for all previous futures to complete
                 CompletableFuture<Void> dependentFuture = CompletableFuture
                         .allOf(futures.toArray(new CompletableFuture[0]))
-                        .thenCompose(ignored -> httpService.makeRequest(url));
+                        .thenCompose(ignored -> httpRequestService.makeRequest(url));
 
                 futures.add(dependentFuture);
             } else {
                 // Perform request without waiting
-                CompletableFuture<Void> currentFuture = httpService.makeRequest(url);
+                CompletableFuture<Void> currentFuture = httpRequestService.makeRequest(url);
                 futures.add(currentFuture);
             }
         }
